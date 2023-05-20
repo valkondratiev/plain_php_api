@@ -46,6 +46,12 @@ catch (CustomException $e) {
         case 404:
             header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
             break;
+        case 422:
+            header($_SERVER['SERVER_PROTOCOL'] . ' 422 Unprocessable Entity', true, 422);
+            break;
+        case 403:
+            header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
+            break;
         default:
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             break;
