@@ -31,4 +31,20 @@ class User
         }
 
     }
+
+    public function updateTokenInfo($user_id, $jti, $exp) {
+        $this->db->query('UPDATE users SET `jti` = :jti, `expired` = :exp WHERE id= :id');
+
+        $time = new DateTime();
+        $time->setTimestamp($exp);
+
+        $this->db->bind(':id', $user_id);
+        $this->db->bind(':jti', $jti);
+        $this->db->bind(':exp', $time->format('Y-m-d H:i:s'));
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
