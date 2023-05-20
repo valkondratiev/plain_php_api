@@ -15,7 +15,9 @@ class Core {
           'PUT' => [
               'items/:id' => [Items::class, 'update']
           ],
-//          'PATCH' =>'update',
+          'PATCH' => [
+              'items/:id' => [Items::class, 'updatePartial']
+          ],
           'DELETE' => [
               'items/:id' => [Items::class, 'delete']
           ]

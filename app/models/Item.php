@@ -55,4 +55,27 @@ class Item {
             return false;
         }
     }
+
+    public function updateItemPartial($data) {
+        $query = "UPDATE items SET ";
+        foreach ($data as $field=>$val) {
+            $query.= " `".$field."` = :".$field.",";
+        }
+        $query .=  '`updated_at` = :updated_at WHERE id= :id';
+
+        $this->db->query($query);
+
+        $date = new DateTime();
+
+        foreach ($data as $field=>$val) {
+            $this->db->bind(':'.$field, $val);
+        }
+        $this->db->bind(':updated_at', $date->format('Y-m-d H:i:s'));
+
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
