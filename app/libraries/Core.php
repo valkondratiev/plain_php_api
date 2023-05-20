@@ -10,7 +10,7 @@ class Core {
               'items/:id' => [Items::class, 'get']
           ],
           'POST' => [
-              'items' => [Items::class, 'store']
+              'items' => [Items::class, 'create']
           ]
 //          'PUT' =>
 //          'PATCH' =>'update',

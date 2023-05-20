@@ -3,10 +3,12 @@
 class Items extends Controller
 {
 
+    private $error=[];
+
     public function __construct()
     {
         parent::__construct();
-        $this->ItemsModel = $this->model('Item');
+        $this->itemsModel = $this->model('Item');
     }
 
 
@@ -14,7 +16,7 @@ class Items extends Controller
     {
         //validate id...
 
-         $item = $this->ItemsModel->getItemById($id);
+         $item = $this->itemsModel->getItemById($id);
          if($item) {
              $response = [
                  'data' => (array)$item
@@ -26,9 +28,19 @@ class Items extends Controller
          }
     }
 
-    public function store()
+    public function create()
     {
-
+        $data = $_POST;
+        if($this->validate($data)) {
+            if ($this->itemsModel->addItem($data)) {
+                echo "ok";
+                // 201 created
+            } else {
+                // error handle
+            }
+        } else {
+            // validation error response
+        }
 
     }
 
@@ -39,6 +51,11 @@ class Items extends Controller
 
     public function delete($id)
     {
+
+    }
+
+    private function validate() {
+        return true;
 
     }
 
