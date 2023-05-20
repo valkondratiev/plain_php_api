@@ -44,10 +44,25 @@ class Items extends Controller
 
     }
 
-    public function update()
+    public function update($id)
     {
+        parse_str(file_get_contents("php://input"), $data);
+        $data['id'] = $id;
 
+        if($this->validate($data)) {
+            $item = $this->itemsModel->getItemById($id);
+            if($item) {
+                if($this->itemsModel->updateItem($data)) {
+                    echo 'update success';
+                } else {
+                    echo 'upd err';
+                }
+            } else {
+                echo 'item not found 404';
+            }
+        }
     }
+
 
     public function delete($id)
     {

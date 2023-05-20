@@ -38,4 +38,21 @@ class Item {
             return false;
         }
     }
+
+    public function updateItem($data) {
+        $this->db->query('UPDATE items SET `name` = :name, `phone` = :phone, `key` = :key, `updated_at` = :updated_at WHERE id= :id');
+
+        $date = new DateTime();
+
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':phone', $data['phone']);
+        $this->db->bind(':key', $data['key']);
+        $this->db->bind(':updated_at', $date->format('Y-m-d H:i:s'));
+        if($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
