@@ -2,27 +2,43 @@
 
 class Items extends Controller
 {
-    public function get($id) {
-        echo json_encode([
-           'data' => [
-               'id' => $id,
-               'name' => 'Test',
-               'phone' => '123456788',
-               'key' => 'key_value'
-           ]
-        ]);
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->ItemsModel = $this->model('Item');
     }
 
-    public function store() {
+
+    public function get($id)
+    {
+        //validate id...
+
+         $item = $this->ItemsModel->getItemById($id);
+         if($item) {
+             $response = [
+                 'data' => (array)$item
+             ];
+             echo json_encode($response);
+         } else {
+             echo 'not found'; die();
+             // not found ....  add error handle
+         }
+    }
+
+    public function store()
+    {
 
 
     }
 
-    public function update() {
+    public function update()
+    {
 
     }
 
-    public function delete ($id) {
+    public function delete($id)
+    {
 
     }
 
