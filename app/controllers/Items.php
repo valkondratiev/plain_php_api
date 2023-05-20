@@ -51,6 +51,18 @@ class Items extends Controller
 
     public function delete($id)
     {
+        //validate id
+        $item = $this->itemsModel->getItemById($id);
+        if($item){
+            if ($this->itemsModel->deleteItem($id)) {
+                // 204
+                echo "ok";
+            } else {
+                //error delete
+            }
+        } else {
+            // error not found
+        }
 
     }
 

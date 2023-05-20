@@ -11,10 +11,12 @@ class Core {
           ],
           'POST' => [
               'items' => [Items::class, 'create']
-          ]
+          ],
 //          'PUT' =>
 //          'PATCH' =>'update',
-//          'DELETE' => 'delete'
+          'DELETE' => [
+              'items/:id' => [Items::class, 'delete']
+          ]
     ];
 
 
