@@ -7,7 +7,6 @@ class Items extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         $this->itemsModel = $this->model('Item');
     }
 

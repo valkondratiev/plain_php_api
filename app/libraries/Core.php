@@ -26,6 +26,8 @@ class Core {
 
     public function __construct()
     {
+        header("Content-Type:application/json");
+
         $url = $this->getUrl();
         $controller = $this->getController($url);
         if(!empty($controller)) {
@@ -38,16 +40,13 @@ class Core {
                     call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
                 }
                 else {
-                    echo 'route not found';
-                    die();
+                    throw new CustomException('Route not found', 404);
                 }
             } else {
-                echo 'route not found';
-                die();
+                throw new CustomException('Route not found', 404);
             }
         } else {
-            echo 'route not found';
-            die();
+            throw new CustomException('Route not found', 404);
         }
     }
 
