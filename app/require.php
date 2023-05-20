@@ -32,18 +32,13 @@ try {
         ]
     ];
     foreach ($e->getErrors() as $error) {
-        $output['error']['details'] = [
+        $output['error']['details'][] = [
             'field' => $error['field'],
             'message' => $error['message'],
         ];
 
     }
-    echo json_encode([
-        'error' => [
-            'message' => 'Validation error',
-            'details' => $output,
-        ]
-    ]);
+    echo json_encode($output);
 }
 catch (CustomException $e) {
     $code = $e->getCode();

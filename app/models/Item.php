@@ -59,6 +59,8 @@ class Item {
     public function updateItemPartial($data) {
         $query = "UPDATE items SET ";
         foreach ($data as $field=>$val) {
+            if($field == 'id')
+                continue;
             $query.= " `".$field."` = :".$field.",";
         }
         $query .=  '`updated_at` = :updated_at WHERE id= :id';
