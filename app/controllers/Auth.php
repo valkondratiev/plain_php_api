@@ -47,7 +47,6 @@ class Auth extends Controller {
                 throw new CustomException('Error authorization', 500);
             }
 
-
             $response = [
                 'data' => [
                     'token' => $jwt,

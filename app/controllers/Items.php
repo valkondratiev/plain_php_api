@@ -8,6 +8,7 @@ class Items extends Controller
     public function __construct()
     {
         $this->itemsModel = $this->model('Item');
+        $this->historyModel = $this->model('History');
     }
 
 
@@ -50,6 +51,7 @@ class Items extends Controller
             $item = $this->itemsModel->getItemById($id);
             if ($item) {
                 if ($this->itemsModel->updateItem($data)) {
+                    $this->setHistory($item,$data);
                     header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content', true, 204);
                 } else {
                     throw new CustomException('Error item update', 500);
@@ -76,6 +78,7 @@ class Items extends Controller
             $item = $this->itemsModel->getItemById($id);
             if ($item) {
                 if ($this->itemsModel->updateItemPartial($data)) {
+                    $this->setHistory($item,$data);
                     header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content', true, 204);
                 } else {
                     throw new CustomException('Error item update', 500);
@@ -252,6 +255,26 @@ class Items extends Controller
                 break;
         }
         return true;
+    }
+
+    private function setHistory($item, $data) {
+        $history = [
+          'item_id' => $item->id,
+          'text' => ''
+        ];
+        $difference = '';
+        foreach ($item as $key => $value) {
+            if(isset($data[$key])){
+                if($data[$key] !== $value) {
+                    $difference.= $key.' = '.$item->$key. ' ===> '. $data[$key]. ' | ';
+                }
+            }
+        }
+        if(!empty($difference)) {
+            $difference = rtrim($difference, ' | ');
+            $history['text'] = 'Изменение данных пользователем '. JwtHelper::getUsername().'. Модифицированы данные в полях: '.$difference;
+            $this->historyModel->addHistory($history);
+        }
     }
 
 }

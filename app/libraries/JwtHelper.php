@@ -48,4 +48,13 @@ final class JwtHelper {
             return TRUE;
         }
     }
+
+    public static function getUsername()
+    {
+        $headers = getallheaders();
+        $token = substr($headers[REQUEST_TOKEN_HEADER],7);
+        $tokenParts = explode('.', $token);
+        $payload = json_decode(base64_decode($tokenParts[1]), true);
+        return isset($payload['sub']) ? $payload['sub'] : '';
+    }
 }
