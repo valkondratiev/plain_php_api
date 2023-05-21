@@ -3,12 +3,15 @@
 require_once 'libraries/Core.php';
 require_once 'libraries/Controller.php';
 require_once 'libraries/Database.php';
+require_once 'libraries/JwtHelper.php';
 require_once 'config.php';
 
 foreach (glob(__DIR__."/exceptions/*.php") as $filename)
 {
     require_once $filename;
 }
+
+require_once 'middleware/TokenVerify.php';
 
 
 try {

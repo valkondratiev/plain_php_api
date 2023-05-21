@@ -7,24 +7,25 @@ class Core {
 
     private $controllerMethodsMap = [
           'GET' => [
-              'items/:id' => [Items::class, 'get']
+              'items/:id' => [Items::class, 'get', 'secure']
           ],
           'POST' => [
-              'items' => [Items::class, 'create'],
+              'items' => [Items::class, 'create', 'secure'],
 
-              'users/register' => [Auth::class, 'register'],
-              'users/auth' => [Auth::class, 'authorization'],
+              'users/register' => [Auth::class, 'register', 'public'],
+              'users/auth' => [Auth::class, 'authorization', 'public'],
           ],
           'PUT' => [
-              'items/:id' => [Items::class, 'update']
+              'items/:id' => [Items::class, 'update', 'secure']
           ],
           'PATCH' => [
-              'items/:id' => [Items::class, 'updatePartial']
+              'items/:id' => [Items::class, 'updatePartial', 'secure']
           ],
           'DELETE' => [
-              'items/:id' => [Items::class, 'delete']
+              'items/:id' => [Items::class, 'delete', 'secure']
           ]
     ];
+
 
 
     public function __construct()
@@ -39,7 +40,11 @@ class Core {
                 $this->currentController = new $controller[0];
                 if (method_exists($this->currentController, $controller[1])) {
                     $this->currentMethod = $controller[1];
-                    $this->params = $controller[2];
+                    $this->params = $controller[3];
+                    // execute token verify
+                    if($controller[2] != 'public') {
+                        TokenVerify::checkAuth();
+                    }
                     call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
                 }
                 else {

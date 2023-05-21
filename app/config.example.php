@@ -6,3 +6,5 @@ define('DB_PASS', '');
 define('DB_NAME', '');
 
 define('TOKEN_EXPIRE_TIME', 0); // token expiration time in seconds
+define('JWT_SECRET', 'secretstring');
+define('REQUEST_TOKEN_HEADER', '');
