@@ -110,6 +110,24 @@ class Items extends Controller
 
     }
 
+    public function getHistory($id)
+    {
+        if (!$this->validate(['id' => $id], 'get')) {
+            throw new ValidationException($this->error, 'Validation error', 400);
+        }
+        $item = $this->itemsModel->getItemById($id);
+        if (!$item) {
+            throw new CustomException('Item with received id not found', 404);
+        }
+        $history = $this->historyModel->getUpdateEvents($id);
+        $response = [
+            'data' => $history
+        ];
+        echo json_encode($response);
+
+
+    }
+
     private function validate($data, $action)
     {
         $required_fields = [

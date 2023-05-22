@@ -7,7 +7,8 @@ class Core {
 
     private $controllerMethodsMap = [
           'GET' => [
-              'items/:id' => [Items::class, 'get', 'secure']
+              'items/:id' => [Items::class, 'get', 'secure'],
+              'items/:id/history' => [Items::class, 'getHistory', 'public'],
           ],
           'POST' => [
               'items' => [Items::class, 'create', 'secure'],

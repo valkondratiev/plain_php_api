@@ -15,4 +15,12 @@ class History {
         $this->db->execute();
     }
 
+    public function getUpdateEvents($id) {
+        $this->db->query('SELECT * FROM history WHERE item_id=:id ORDER BY created_at DESC');
+        $this->db->bind(':id', $id);
+        $results = $this->db->resultSet();
+        return $results;
+
+    }
+
 }
