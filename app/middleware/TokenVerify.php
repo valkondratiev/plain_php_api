@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__.'/../models/User.php';
 
 class TokenVerify {
 
@@ -20,10 +21,16 @@ class TokenVerify {
         }
 
         if(JwtHelper::is_jwt_valid($token)) {
+            $userModel = new User();
+            $user = $userModel->checkJti(JwtHelper::getJti());
+            if(!$user) {
+                throw new CustomException('Access denied. Token valid but user generate newer', 403);
+            }
             return true;
         } else {
             throw new CustomException('Access denied. Token verification failed', 403);
         }
+
     }
 
 

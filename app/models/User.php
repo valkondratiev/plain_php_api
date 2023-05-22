@@ -47,4 +47,11 @@ class User
             return false;
         }
     }
+
+    public function checkJti($jti) {
+        $this->db->query('SELECT * FROM users WHERE jti=:jti');
+        $this->db->bind(':jti', $jti);
+        $row = $this->db->single();
+        return $row;
+    }
 }
